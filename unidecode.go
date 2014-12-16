@@ -27,7 +27,7 @@ var (
 )
 
 func decodeTransliterations() {
-	r, err := zlib.NewReader(strings.NewReader(tableData))
+	r, err := zlib.NewReader(strings.NewReader(tableData + tableData1 + tableData2 + tableData3 + tableData4))
 	if err != nil {
 		panic(err)
 	}
