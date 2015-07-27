@@ -6,13 +6,11 @@ package unidecode
 import (
 	"bytes"
 	"compress/zlib"
-	"encoding/binary"
 	"encoding/base64"
+	"encoding/binary"
 	"io"
 	"sync"
 	"unicode"
-
-	"gopkgs.com/pool.v1"
 )
 
 const pooledCapacity = 64
@@ -21,12 +19,11 @@ var (
 	mutex            sync.Mutex
 	transliterations [65536][]rune
 
-	slicePool  = pool.New(0)
+	slicePool  = new(sync.Pool)
 	decoded    = false
 	transCount = rune(len(transliterations))
 	getUint16  = binary.LittleEndian.Uint16
 )
-
 
 func decodeTransliterations() {
 	data, err := base64.StdEncoding.DecodeString(tableData)
